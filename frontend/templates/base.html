@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aus Reef Tracker</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static',filename='styles/base.css')}}"
+    />
+    <!-- <script src="{{url_for('static', filename='scripts/base.js')}}"></script> -->
+  </head>
+  <body>
+    <div id="header"></div>
+    <div class="content">{% block content %} {% endblock %}</div>
+    <div id="footer"></div>
+    <script src="{{url_for('static', filename='scripts/_react.js')}}"></script>
+  </body>
+</html>

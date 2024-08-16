@@ -1,0 +1,37 @@
+[
+  {
+    "title": "Why is the Great Barrier Reef in trouble? A simple guide",
+    "url": "https://www.bbc.com/news/world-australia-57938858",
+    "author": "BBC News",
+    "imageURL": "../assets/article2.jpg",
+    "description": "The Great Barrier Reef has not been added to the Unesco list of World Heritage Sites that are \"in danger\", following strong lobbying from Australia. A report from Unesco, the UN's scientific and cultural body, had said that not enough was being done to protect the reef from climate change or to meet water quality targets."
+  },
+  {
+    "title": "Can artificially altered clouds save the Great Barrier Reef?",
+    "url": "https://www.nature.com/articles/d41586-021-02290-3",
+    "author": "Nature",
+    "imageURL": "../assets/article3.jpg",
+    "description": "In place of its normal load of cars and vans, the repurposed ferry boat sported a mobile science laboratory and a large fan on its deck as it left Townsville, Australia, in March. Researchers dropped anchor in a coral lagoon some 100 kilometres offshore and then fired up the cone-shaped turbine, which blew a mist of seawater off the back of the boat."
+  },
+  {
+    "title": "Coral Reef Ecosystems under Climate Change and Ocean Acidification",
+    "url": "https://www.frontiersin.org/articles/10.3389/fmars.2017.00158/full",
+    "author": "Frontiers",
+    "imageURL": "../assets/article4.jpg",
+    "description": "Coral reefs are found in a wide range of environments, where they provide food and habitat to a large range of organisms as well as providing many other ecological goods and services. Warm-water coral reefs, for example, occupy shallow sunlit, warm, and alkaline waters in order to grow and calcify at the high rates necessary to build and maintain their calcium carbonate structures."
+  },
+  {
+    "title": "Ways you can help the Great Barrier Reef",
+    "url": "https://www.tropicalnorthqueensland.org.au/articles/ways-help-great-barrier-reef/",
+    "author": "Tropical North Queensland",
+    "imageURL": "../assets/article5.jpg",
+    "description": "Contrary to popular belief, coming to see the Great Barrier Reef is one of the single best ways you can help in its conservation. Every visitor to the reef pays an Environmental Management Charge which contributes to the day-to-day management of the Marine Park and funding the research that is improving its long-term resilience. This charge also helps contribute to the Great Barrier Reef status of the world’s best managed reef."
+  },
+  {
+    "title": "How Australia Is Trying to Save Its Coral Reefs",
+    "url": "https://www.usnews.com/news/best-countries/articles/2021-11-08/how-australia-is-trying-to-save-coral-reefs-from-climate-change",
+    "author": "US News",
+    "imageURL": "../assets/article1.jpg",
+    "description": "As world leaders continue to meet in Scotland to discuss major actions that can be taken to halt climate change, experts say that while more drastic, coordinated efforts are still needed, some promising projects are underway in Australia to address one of the many impacts of global warming: coral health. These experiments may provide a useful model for other countries trying to preserve their own reefs."
+  }
+]

@@ -1,0 +1,79 @@
+stages:
+  - build
+  - test
+  - deploy
+  - prod-test
+variables:
+  IMAGE_NAME: ausreeftracker/aus-reef-tracker-repo
+  IMAGE_TAG: stable
+
+build-job:
+  stage: build
+  image: docker
+  services: 
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: tcp://docker:2375
+  before_script:
+    - echo $DOCKER_HOST
+    - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+  script:
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker push $IMAGE_NAME:$IMAGE_TAG
+  environment: production
+  only: 
+    - main
+  
+test-checkSQL:
+  stage: test
+  before_script:
+    - chmod 400 $SSH_KEY
+  script:
+    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@170.64.252.0 "docker ps | grep mysql" || exit 1
+  environment: production
+  only: 
+    - main
+
+
+test-checkSSL:
+  stage: test
+  before_script:
+    - chmod 400 $SSH_KEY
+  script:
+    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@170.64.252.0 "if [ -f /etc/letsencrypt/live/aus-reef-tracker.com/fullchain.pem ] && [ -f /etc/letsencrypt/live/aus-reef-tracker.com/privkey.pem ]; then exit 0; else exit 1; fi"
+  environment: production
+  only: 
+    - main
+
+
+deploy-prod:
+  stage: deploy
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: "tcp://docker:2375"
+  services:
+    - docker:dind
+  before_script:
+    - chmod 400 $SSH_KEY
+  script:
+    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@170.64.252.0 "
+      set -x &&
+      echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin &&
+      docker ps -aq --filter ancestor=$IMAGE_NAME:$IMAGE_TAG | xargs -r docker stop | xargs -r docker rm  &&
+      docker pull ausreeftracker/aus-reef-tracker-repo:stable &&
+      docker ps -a &&
+      docker run -d -p 80:80 -p 443:443 -v /etc/letsencrypt/live/aus-reef-tracker.com/fullchain.pem:/etc/nginx/ssl/certificate -v /etc/letsencrypt/live/aus-reef-tracker.com/privkey.pem:/etc/nginx/ssl/key $IMAGE_NAME:$IMAGE_TAG"
+  environment: production
+  only: 
+    - main
+
+test-checkConnection:
+  stage: prod-test
+  before_script:
+    - chmod 400 $SSH_KEY
+  script:
+    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@170.64.252.0 'urls=("http://aus-reef-tracker.com/" "https://aus-reef-tracker.com/" "http://aus-reef-tracker.com/home" "https://aus-reef-tracker.com/home" "http://aus-reef-tracker.com/dashboard" "https://aus-reef-tracker.com/dashboard" "http://aus-reef-tracker.com/library" "https://aus-reef-tracker.com/library"); for url in "${urls[@]}"; do if curl -Is "$url" | head -n 1 | grep -q "200 OK"; then echo "$url - OK"; else echo "$url - Failed with status code $(curl -Is "$url" | head -n 1 | awk "{print \$2}")"; fi; done;'
+  environment: production
+  only:
+    - main
